@@ -1,41 +1,38 @@
-import { outfit } from "@/config/fonts";
+"use client"
+
+import { Button } from "@/components/ui/button";
+import { mono } from "@/config/fonts";
+import { MoveRight } from "lucide-react";
 
 const hero = () => {
   return (
-    <>
-      <nav
-        className={`bg-[#FFFFFF] text-background fixed top-3 inset-x-5 ${outfit.className} rounded-full p-5 grid grid-cols-[1fr_auto_1fr] items-center`}
+      <section
+        className={`h-dvh w-full flex flex-col items-center justify-center bg-[#F6F5EE] text-background ${mono.className}`}
       >
-        <h1 className="text-xl font-bold cursor-default">TRACK</h1>
-        <ul className="flex items-center gap-3">
-          <li className="cursor-pointer hover:text-primary transition hover:bg-background/10 px-4 py-2 rounded-full">
-            Home
-          </li>
-          <li className="cursor-pointer hover:text-primary transition hover:bg-background/10 px-4 py-2 rounded-full">
-            Features
-          </li>
-          <li className="cursor-pointer hover:text-primary transition hover:bg-background/10 px-4 py-2 rounded-full">
-            Pricing
-          </li>
-          <li className="cursor-pointer hover:text-primary transition hover:bg-background/10 px-4 py-2 rounded-full">
-            Contact
-          </li>
-        </ul>
-        <div className="flex items-center justify-end gap-3">
-          <button className="text-background px-4 py-2 rounded-full hover:bg-background/10 transition cursor-pointer">
-            Sign Up
-          </button>
-          <button className="text-background px-4 py-2 rounded-full hover:bg-background/10 transition cursor-pointer">
-            Login
-          </button>
+        <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center">
+          <div className="w-full h-full text-4xl md:text-6xl lg:text-7xl flex items-start lg:justify-center justify-end flex-col">
+            <h1>
+              YOUR <span className="text-blue-600">FINANCES.</span>
+            </h1>
+            <h1>
+              CLEARLY <span className="text-blue-600">STRUCTURED.</span>
+            </h1>
+          </div>
+          <div className="w-full h-full flex justify-center items-start lg:items-center">
+            <div className="flex flex-col lg:flex-row items-end lg:items-center lg:justify-between p-2">
+              <p className="text-2xl lg:text-4xl">
+                A personal finance tracker built around clarity and structure.
+              </p>
+              <div className="flex items-end lg:items-center justify-center">
+                <Button className="bg-background text-foreground rounded-full text-2xl px-8 py-3 gap-2 cursor-pointer">
+                  START
+                  <MoveRight className="size-7" />
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
-      <section className="min-h-dvh w-full flex items-center justify-center bg-[#F6F5EE] text-background">
-        <h1 className="text-4xl font-bold text-center mt-10">
-          Welcome to My Portfolio
-        </h1>
       </section>
-    </>
   );
 }
 export default hero
