@@ -1,4 +1,4 @@
-import Page from "@/src/pages/login"
+import Page from "@/pages/login"
 
 const page = () => {
   return (

@@ -6,9 +6,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { outfit } from "@/config/fonts";
 import { AudioWaveform } from "lucide-react";
+import { motion } from "motion/react";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  const pathname = usePathname() as string;
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isFeaturesPage = pathname === "/features" || pathname.startsWith("/features/");
@@ -16,7 +17,7 @@ const Navbar = () => {
 
   const handleSignUp = () => {
     setIsMenuOpen(false);
-    router.push("/signup");
+    router.push("/usersignup");
   }
 
   const handleLogin = () => {
@@ -26,7 +27,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
+      <motion.nav
+        initial={{ opacity: 1, y: "-100%" }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className={`bg-[#FFFFFF] text-background fixed top-3 inset-x-5 ${outfit.className} rounded-full p-5 grid grid-cols-[1fr_auto_1fr] items-center`}
       >
         <Link
@@ -60,7 +64,7 @@ const Navbar = () => {
         </ul>
         <div className="md:flex items-center justify-end gap-3 hidden">
           <Button
-            className="bg-forground text-background px-4 py-2 rounded-full hover:bg-background/10 transition cursor-pointer"
+            className="bg-transparent text-background px-4 py-2 rounded-full hover:bg-background/10 transition cursor-pointer"
             onClick={handleSignUp}
           >
             Sign Up
@@ -141,7 +145,7 @@ const Navbar = () => {
             </Button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
     </>
   );
 }

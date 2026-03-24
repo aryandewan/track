@@ -14,11 +14,17 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter()
+  const handleLink = () => {
+    router.push("/dashboard")
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -53,12 +59,12 @@ export function LoginForm({
                 <Input id="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit" className="cursor-pointer">Login</Button>
-                <Button variant="outline" type="button" className="text-foreground hover:text-background cursor-pointer">
+                <Button type="submit" className="cursor-pointer h-10 font-bold text-lg" onClick={handleLink}>Login</Button>
+                <Button variant="outline" type="button" className="text-foreground hover:text-background cursor-pointer h-10 font-bold text-lg">
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center cursor-default">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Don&apos;t have an account? <a href="/usersignup">Sign Up</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
