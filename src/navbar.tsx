@@ -17,12 +17,12 @@ const Navbar = () => {
 
   const handleSignUp = () => {
     setIsMenuOpen(false);
-    router.push("/usersignup");
+    router.push("/signup");
   }
 
   const handleLogin = () => {
     setIsMenuOpen(false);
-    router.push("/userlogin");
+    router.push("/login");
   }
 
   return (

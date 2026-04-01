@@ -63,7 +63,7 @@ const hero = () => {
             width={1000}
             height={1000}
             alt="Hero Image"
-            objectFit="cover"
+            className="object-cover"
           />
         </motion.div>
       </div>

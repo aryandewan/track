@@ -14,8 +14,10 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
+import { useRef } from "react"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const emailRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const handleLink = () => {
     router.push("/dashboard")
@@ -39,6 +41,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
+                ref = {emailRef}
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -74,7 +77,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   Sign up with Google
                 </Button>
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <a href="/userlogin">LogIn</a>
+                  Already have an account? <a href="/login">LogIn</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
