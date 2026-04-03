@@ -4,44 +4,107 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client-ts"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        Int       @id @default(autoincrement())
-  fullname  String    @unique
-  username  String    @unique
-  password  String    
-  finance   Finance[]
-  avatar    String?     
+model Account { 
+  id                String  @id @default(cuid()) 
+  userId            String  @map("user_id") 
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id") 
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  @@unique([provider, providerAccountId]) 
+  @@map("accounts") 
+} 
+
+model Session { 
+  id           String   @id @default(cuid()) 
+  sessionToken String   @unique @map("session_token") 
+  userId       String   @map("user_id") 
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  @@map("sessions") 
 }
+
+model User { 
+  id            String    @id @default(cuid()) 
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified") 
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  finances      Finance[]
+  budget        Budget[]
+  transtions    Transtions[]
+  investment    Investment[]
+  @@map("users") 
+} 
+
+model VerificationToken { 
+  identifier String
+  token      String
+  expires    DateTime
+  @@unique([identifier, token]) 
+  @@map("verification_tokens") 
+} 
 
 model Finance {
-  id        Int       @id @default(autoincrement())
-  salary    Int       
-  saving    Int
-  trans     Transactions[]
-  invest    Investments[]
-  left      Int
-  user      User      @relation(fields: [userId], reference: [id])
+  id          String   @id @default(cuid())
+  amount      Float
+  description String?
+  date        DateTime
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transtions    Transtions[]
+  budget        Budget[]
+  investment    Investment[]
+  @@map("finances")
 }
 
-model Transactions {
-  id        Int       @id @default(autoincrement())
-  amount    Int
-  merchant  String
-  date      DateTime  @db.Date
-  finance   Finance   @relation(fields: [financeId], reference: [id])
+model Budget {
+  id          String   @id @default(cuid())
+  amount      Float
+  category    String
+  userId      String
+  financeId   String
+  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("budgets")
 }
 
-model Investments {
-  id        Int       @id @default(autoincrement())
-  amount    Int
-  firm      Int
-  date      DateTime  @db.Date
-  finance   Finance   @relation(fieldsl; [financeId], reference: [id])
+model Transtions {
+  id          String   @id @default(cuid())
+  amount      Float
+  description String?
+  date        DateTime
+  financeId   String
+  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("transtions")
+}
+
+model Investment {
+  id          String   @id @default(cuid())
+  amount      Float
+  description String?
+  date        DateTime
+  userId      String
+  financeId   String
+  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("investments")
 }
