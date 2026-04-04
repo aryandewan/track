@@ -2,6 +2,8 @@
 
 import { useOpenStore } from "@/config/store";
 import { AudioWaveform, CircleUser, EllipsisVertical, LayoutDashboard, LucideIcon, Plus, ReceiptText, Settings, Wallet } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 type SidebarItem = {
@@ -36,6 +38,7 @@ const data = {
 };
 
 const Sidebar = () => {
+  const {data: session} = useSession()
   const open = useOpenStore((state) => state.open)
 
   return (
@@ -70,8 +73,22 @@ const Sidebar = () => {
           <h1>Add Transactions</h1>
         </div>
         <div className="h-16 w-full flex items-center justify-start gap-1 px-2">
-          <CircleUser />
-          <h1 className="text-xl">User</h1>
+          {session?.user?.image ? (
+            <Image
+              src={session.user.image}
+              alt="Profile Picture"
+              className="rounded-full"
+              width={32}
+              height={32}
+            />
+          ) : (
+            <CircleUser className="size-8" />
+          )}
+          {session?.user?.name ? (
+            <h1 className="text-xl font-bold">{session.user.name}</h1>
+          ) : (
+            <h1>Guest</h1>
+          )}
           <EllipsisVertical className="ml-auto cursor-pointer hover:bg-background/10 hover:rounded-lg p-1 size-8" />
         </div>
       </div>
