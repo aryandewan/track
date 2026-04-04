@@ -18,65 +18,10 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-
-    const fullname = formData.get("name") as string;
-    const username = formData.get("email") as string; // You're using email field as username
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirm-password") as string;
-
-    // Basic client-side check for confirm password
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!username || !password) {
-      setError("Username and password are required");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username, // or email if you change your schema
-          password,
-          // fullname if you want to save it
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        setError(result.message || "Signup failed. Please try again.");
-        return;
-      }
-
-      if (result.token) {
-        localStorage.setItem("token", result.token);
-        router.push("/dashboard");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Network error. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <Card {...props}>
@@ -87,7 +32,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit}>
+        <form>
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
@@ -165,3 +110,5 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     </Card>
   );
 }
+
+export default SignupForm;
