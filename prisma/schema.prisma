@@ -46,12 +46,12 @@ model User {
   emailVerified DateTime? @map("email_verified") 
   password      String?
   image         String?
+  salary        Int?
   accounts      Account[]
   sessions      Session[]
-  finances      Finance[]
   budget        Budget[]
-  transtions    Transtions[]
-  investment    Investment[]
+  transactions  Transactions[]
+  investments   Investments[]
   @@map("users") 
 } 
 
@@ -61,52 +61,33 @@ model VerificationToken {
   expires    DateTime
   @@unique([identifier, token]) 
   @@map("verification_tokens") 
-} 
-
-model Finance {
-  id          String   @id @default(cuid())
-  amount      Float
-  description String?
-  date        DateTime
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transtions    Transtions[]
-  budget        Budget[]
-  investment    Investment[]
-  @@map("finances")
 }
 
 model Budget {
   id          String   @id @default(cuid())
   amount      Float
   category    String
-  userId      String
-  financeId   String
-  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("budgets")
 }
 
-model Transtions {
+model Transactions {
   id          String   @id @default(cuid())
   amount      Float
   description String?
   date        DateTime
-  financeId   String
-  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
-  userId      String
+  userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@map("transtions")
+  @@map("transactions")
 }
 
-model Investment {
+model Investments {
   id          String   @id @default(cuid())
   amount      Float
   description String?
   date        DateTime
-  userId      String
-  financeId   String
-  finance     Finance  @relation(fields: [financeId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id")
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("investments")
 }
