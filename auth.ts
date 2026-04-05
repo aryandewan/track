@@ -5,5 +5,5 @@ import prisma from "@/lib/prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
-  adapter: PrismaAdapter(prisma as any), // <-- The "as any" fixes the red squigglies!
+  adapter: PrismaAdapter(prisma as any),
 });

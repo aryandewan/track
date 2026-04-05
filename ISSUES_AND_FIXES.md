@@ -49,3 +49,11 @@ This document serves as a ledger of errors, bugs, and knowledge gaps encountered
 ### 11. API Route Compilation Failure due to `@prisma/adapter-pg` Misconfiguration
 **Issue**: Even after fixing the middleware, `/api/auth/session` continued to return an HTML 404 page with a `ClientFetchError`. This happened because the NextAuth API route (`app/api/auth/[...nextauth]/route.ts`) completely failed to register during Next.js compilation. The root cause was `lib/prisma.ts`: `PrismaPg` was initialized by passing an object with a `connectionString`, which caused a fatal Node.js error internally, crashing any file that imported `prisma` (like `auth.ts`).
 **Fix**: Modified `lib/prisma.ts` to correctly import `{ Pool }` from the native `pg` package. Initialized the pool with `new Pool({ connectionString: ... })` and passed that instantiated `pool` into `new PrismaPg(pool)`. This allowed `auth.ts` and the Next.js API route to successfully mount and serve JSON responses.
+
+### 12. `middleware` Deprecation and Memory Restart Error in Next.js 16
+**Issue**: The console threw a fatal `middleware file convention is deprecated` error alongside recurring `/api/auth/session` 404s and HTML fetch parsing errors. Next.js reached a memory threshold, restarted, and enforced the Next.js 16.x strict convention which deprecates `middleware.ts` in favor of `proxy.ts`. Because the application still used `middleware.ts` and exported a variable named `middleware`, routing failed entirely during the restart, returning Next.js unhandled HTML to the NextAuth client API checks.
+**Fix**: Renamed `middleware.ts` to `proxy.ts`. However, directly renaming it to `export const { auth: proxy } = NextAuth(...)` caused a separate Next.js compiler crash: `TypeError: adapterFn is not a function`. This happened because Next.js 16 (using Turbopack) cannot statically analyze destructured variables as valid proxy endpoints. To fix it, the code was rewritten to cleanly instantiate NextAuth and use an explicit default export: 
+```ts
+const { auth } = NextAuth(authConfig)
+export default auth
+```
