@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
 import { outfit } from "@/config/fonts";
 import { AudioWaveform } from "lucide-react";
 import { motion } from "motion/react";

@@ -1,4 +1,4 @@
-import Hero from "@/src/hero";
+import Hero from "@/src/components/hero";
 
 const page = () => {
   return (

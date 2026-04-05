@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/src/components/login-form";
 import { mono } from "@/config/fonts";
 import { AudioWaveform } from "lucide-react";
 import { useRouter } from "next/navigation";

@@ -1,4 +1,4 @@
-import SummaryCard from "@/components/SummaryCard";
+import SummaryCard from "@/src/components/SummaryCard";
 import DashboardShell from "./DashboardShell";
 
 const Page = () => {
@@ -9,30 +9,31 @@ const Page = () => {
           title="Total Balance"
           titleClassName="text-4xl" 
           className="flex justify-between"
-          addType="Salary"
+          addType="salary"
         />
         <div className="grid md:grid-rows-2 md:grid-cols-2 gap-4 bg-[#EDEDED] p-4 rounded-xl">
           <SummaryCard
             title="Total Income"
             titleClassName="text-3xl"
-            addType="Salary"
+            addType="salary"
           />
           <SummaryCard
             title="Total Expenses"
             titleClassName="text-3xl"
-            addType="Transactions"
+            addType="transactions"
           />
           <SummaryCard
             title="Monthly Spending Limit"
             titleClassName="text-3xl"
             className="col-span-2"
-            addType="Limit"
+            addType="limit"
           />
         </div>
         <SummaryCard
           amount={1000}
           title="Total Expenses"
           titleClassName="text-4xl"
+          addType="transactions"
         />
       </div>
       <div className="min-h-dvh flex-1 rounded-xl bg-background/50" />

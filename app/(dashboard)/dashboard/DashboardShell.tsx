@@ -1,9 +1,12 @@
 "use client"
 
+import Modal from "@/src/components/Modal";
+import { useModalManagement } from "@/store/modalManagement";
 import { useSession } from "next-auth/react";
 
 const DashboardShell = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
+  const { isModalOpen } = useModalManagement()
 
   return (
     <section className="min-h-dvh w-full bg-[#f6f5ee]">
@@ -16,6 +19,9 @@ const DashboardShell = ({ children }: { children: React.ReactNode }) => {
       <div className={`flex flex-1 flex-col gap-4 px-4`}>
         {children}
       </div>
+      <Modal>
+        <h1>Modal</h1>
+      </Modal>
     </section>
   );
 };

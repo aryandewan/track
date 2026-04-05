@@ -1,6 +1,6 @@
 import { outfit } from "@/config/fonts";
-import { Dbnavbar } from "@/src/dbnavbar";
-import Sidebar from "@/src/sidebar";
+import { Dbnavbar } from "@/src/components/dbnavbar";
+import Sidebar from "@/src/components/sidebar";
 
 
 const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
