@@ -3,12 +3,9 @@
 import { useModalManagement } from "@/store/modalManagement"
 import { Button } from "./ui/button"
 import { X } from "lucide-react"
+import SalaryForm from "./salary-form"
 
-interface ModalProps {
-    children?: React.ReactNode
-}
-
-const Modal = ({ children }: ModalProps) => {
+const Modal = () => {
     const { closeModal, isModalOpen, type } = useModalManagement()
     if (!isModalOpen) return null
     return (
@@ -17,7 +14,7 @@ const Modal = ({ children }: ModalProps) => {
           className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in"
           onClick={closeModal}
         />
-        <div className="relative bg-[#f6f5ee] p-4 rounded-lg text-black w-full max-w-lg">
+        <div className="relative bg-[#f6f5ee] p-4 rounded-lg text-black w-full max-w-lg space-y-5">
           <div className="flex justify-between items-center gap-10">
             <h1 className="text-2xl font-bold">
               {type === "salary" && "Add Salary"}
@@ -31,7 +28,9 @@ const Modal = ({ children }: ModalProps) => {
               <X/>
             </Button>
           </div>
-          {children}
+          {type === "salary" && <SalaryForm />}
+          {type === "limit" && "Coming Soon"}
+          {type === "transactions" && "Coming Soon"}
         </div>
       </div>
     );

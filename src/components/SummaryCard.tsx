@@ -20,7 +20,7 @@ const SummaryCard = ({amount, title, titleClassName, className, addType}: Summar
       <div>
         <h2>
           {amount ? (
-            <>₹{amount}</>
+            <h1 className="text-4xl">₹{amount}</h1>
           ) : (
             <Button 
               className="bg-foreground border border-black/10 px-4 py-2 text-background rounded-full cursor-pointer hover:bg-background hover:text-white text-lg"

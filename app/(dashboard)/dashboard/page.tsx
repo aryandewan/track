@@ -1,11 +1,24 @@
 import SummaryCard from "@/src/components/SummaryCard";
 import DashboardShell from "./DashboardShell";
+import { auth } from "@/auth";
+import prisma from "@/lib/prisma";
 
-const Page = () => {
+const Page = async () => {
+  const session = await auth()
+  const salary = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id
+    },
+    select: {
+      salary: true
+    }
+  })
+
   return (
     <DashboardShell>
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
         <SummaryCard 
+          amount={salary?.salary || 0}
           title="Total Balance"
           titleClassName="text-4xl" 
           className="flex justify-between"
@@ -13,6 +26,7 @@ const Page = () => {
         />
         <div className="grid md:grid-rows-2 md:grid-cols-2 gap-4 bg-[#EDEDED] p-4 rounded-xl">
           <SummaryCard
+            amount={salary?.salary || 0}
             title="Total Income"
             titleClassName="text-3xl"
             addType="salary"
