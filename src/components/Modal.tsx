@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { X } from "lucide-react";
 import SalaryForm from "./forms/salary-form";
 import TransactionForm from "./forms/transaction-form";
+import LimitForm from "./forms/limit-form";
 
 const Modal = () => {
   const { closeModal, isModalOpen, type } = useModalManagement();
@@ -30,7 +31,7 @@ const Modal = () => {
           </Button>
         </div>
         {type === "salary" && <SalaryForm />}
-        {type === "limit" && "Coming Soon"}
+        {type === "limit" && <LimitForm />}
         {type === "transactions" && <TransactionForm />}
       </div>
     </div>

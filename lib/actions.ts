@@ -47,3 +47,21 @@ export const addTransaction = async (formData: FormData) => {
         console.log(error)
     }
 }
+
+export const addLimit = async (formData: FormData) => {
+    const session = await auth()
+    const limit = formData.get("limit")
+
+    if (!session?.user?.id) {
+        throw new Error("Unauthorized")
+    }
+
+    await prisma.user.update({
+        where: {
+            id: session.user.id
+        },
+        data: {
+            limit: Number(limit)
+        }
+    })
+}
