@@ -79,8 +79,10 @@ const Sidebar = ({ className }: { className?: string }) => {
         })}
       </div>
       <div className="flex flex-col w-full gap-1">
-        <div className="h-12 w-full flex items-center justify-center px-2 rounded-full cursor-pointer hover:bg-background hover:text-white">
-          <Plus onClick={() => openModal("transactions")} />
+        <div 
+          onClick={() => openModal("transactions")}
+          className="h-12 w-full flex items-center justify-center px-2 rounded-full cursor-pointer hover:bg-background hover:text-white">
+          <Plus />
         </div>
         <div className="flex items-center justify-center">
           {session?.user?.image ? (
