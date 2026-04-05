@@ -8,19 +8,20 @@ type SummaryCardProps = {
   title : string;
   titleClassName? : string
   className? : string
+  amountClassName? : string
   addType: ModalType
 }
 
-const SummaryCard = ({amount, title, titleClassName, className, addType}: SummaryCardProps) => {
+const SummaryCard = ({amount, title, titleClassName, className, amountClassName, addType}: SummaryCardProps) => {
   const { openModal } = useModalManagement()
 
   return (
-    <div className={`bg-[#F6F6F6] text-black rounded-xl p-4 flex flex-col gap-4 border border-black/10 ${className}`}>
+    <div className={`bg-[#F6F6F6] text-black rounded-xl p-4 flex flex-col gap-4 border border-black/10 ${className} justify-between`}>
       <h1 className={titleClassName}>{title}</h1>
       <div>
-        <h2>
+        <>
           {amount ? (
-            <h1 className="text-4xl">₹{amount}</h1>
+            <h1 className={amountClassName}>₹{amount}</h1>
           ) : (
             <Button 
               className="bg-foreground border border-black/10 px-4 py-2 text-background rounded-full cursor-pointer hover:bg-background hover:text-white text-lg"
@@ -29,7 +30,7 @@ const SummaryCard = ({amount, title, titleClassName, className, addType}: Summar
               Add {addType}
             </Button>
           )}
-        </h2>
+        </>
       </div>
     </div>
   );

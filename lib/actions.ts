@@ -20,3 +20,30 @@ export const addSalary = async (formData: FormData) => {
         }
     })
 }
+
+export const addTransaction = async (formData: FormData) => {
+    const session = await auth()
+    const description = formData.get("txn-description")
+    const amount = formData.get("txn-amount")
+    const date = formData.get("txn-date")
+
+    if (!session?.user?.id) {
+        throw new Error("Unauthorized")
+    }
+
+    try {
+        await prisma.transactions.create({
+            data: {
+                userId: session.user.id,
+                description: String(description),
+                amount: Number(amount),
+                date: new Date(String(date)),
+            },
+            include: {
+                user: true
+            }
+        })
+    } catch(error) {
+        console.log(error)
+    }
+}

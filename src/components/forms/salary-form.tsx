@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Form from "next/form"
-import { addSalary } from "@/lib/actions"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
+import Form from "next/form";
+import { addSalary } from "@/lib/actions";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 const SalaryForm = () => {
   return (
@@ -29,6 +29,6 @@ const SalaryForm = () => {
       </Button>
     </Form>
   );
-}
+};
 
-export default SalaryForm
+export default SalaryForm;
