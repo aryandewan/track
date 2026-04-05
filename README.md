@@ -130,3 +130,10 @@ Visit: `http://localhost:3000`
 No license has been specified yet. Add one (for example, MIT) before public distribution.
 
 
+## Issues I faced
+
+ - Faced issues in configuering nextAuth
+ - Faced issues in creating the same modal for 3 different forms.
+ - Didn't know the difference between session from next-auth and session from prisma.
+ - Limit bar was not working as expected.
+ - To update the balance, expenses and limit, I had to refresh the page, which is not a good user experience.

@@ -2,6 +2,7 @@ import SummaryCard from "@/src/components/SummaryCard";
 import DashboardShell from "./DashboardShell";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
+import LimitCard from "@/src/components/LimitCard";
 
 const Page = async () => {
   const session = await auth()
@@ -26,9 +27,20 @@ const Page = async () => {
     }
   })
 
+  const limit = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id
+    },
+    select: {
+      limit: true
+    }
+  })
+
   const newSalary = salary?.salary || 0
   const totalExpenses = expenses._sum.amount || 0
   const balance = newSalary - totalExpenses
+  const monthlyLimit = limit?.limit || 0
+  const percentage = Math.round(((totalExpenses / monthlyLimit) * 100) || 0)
 
   return (
     <DashboardShell>
@@ -56,11 +68,14 @@ const Page = async () => {
             amountClassName="text-4xl"
             addType="transactions"
           />
-          <SummaryCard
+          <LimitCard
+            amount={monthlyLimit}
             title="Monthly Spending Limit"
-            titleClassName="text-3xl"
+            titleClassName="text-xl"
             className="col-span-2"
             addType="limit"
+            amountClassName="text-sm"
+            percentage={percentage}
           />
         </div>
         <SummaryCard

@@ -1,7 +1,17 @@
-"use client"
+"use client";
 
-import { useOpenStore } from "@/config/store";
-import { AudioWaveform, CircleUser, LayoutDashboard, LucideIcon, Plus, ReceiptText, Settings, Wallet } from "lucide-react";
+import { useOpenStore } from "@/store/store";
+import { useModalManagement } from "@/store/modalManagement";
+import {
+  AudioWaveform,
+  CircleUser,
+  LayoutDashboard,
+  LucideIcon,
+  Plus,
+  ReceiptText,
+  Settings,
+  Wallet,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,8 +50,9 @@ const data = {
 
 const Sidebar = ({ className }: { className?: string }) => {
   const pathname = usePathname() as string;
-  const {data: session} = useSession()
-  const open = useOpenStore((state) => state.open)
+  const { data: session } = useSession();
+  const open = useOpenStore((state) => state.open);
+  const { openModal } = useModalManagement();
   return (
     <div
       className={`h-fit bg-foreground text-background flex flex-col justify-center ${open ? "w-16 p-2 mx-2" : "w-0 p-0 mx-0"} transition-[width] duration-200 gap-1 rounded-full ${className}`}
@@ -52,7 +63,8 @@ const Sidebar = ({ className }: { className?: string }) => {
         </div>
         {data.sidebarMain.map((item, i) => {
           const Icon = item.icon;
-          const isActive = pathname === item.link || pathname.startsWith(`${item.link}/`);
+          const isActive =
+            pathname === item.link || pathname.startsWith(`${item.link}/`);
           return (
             <Link
               key={i}
@@ -68,7 +80,7 @@ const Sidebar = ({ className }: { className?: string }) => {
       </div>
       <div className="flex flex-col w-full gap-1">
         <div className="h-12 w-full flex items-center justify-center px-2 rounded-full cursor-pointer hover:bg-background hover:text-white">
-          <Plus />
+          <Plus onClick={() => openModal("transactions")} />
         </div>
         <div className="flex items-center justify-center">
           {session?.user?.image ? (
@@ -86,5 +98,5 @@ const Sidebar = ({ className }: { className?: string }) => {
       </div>
     </div>
   );
-}
-export default Sidebar
+};
+export default Sidebar;
