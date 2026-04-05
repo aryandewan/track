@@ -55,9 +55,9 @@ const Sidebar = ({ className }: { className?: string }) => {
   const { openModal } = useModalManagement();
   return (
     <div
-      className={`h-fit bg-foreground text-background flex flex-col justify-center ${open ? "w-16 p-2 mx-2" : "w-0 p-0 mx-0"} transition-[width] duration-200 gap-1 rounded-full ${className}`}
+      className={`h-fit bg-foreground text-background flex flex-col justify-center ${open ? "w-16 p-2 mx-2" : "w-0 p-0 mx-0"} transition-[width] duration-200 gap-3 rounded-full ${className} border border-black/10`}
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-3">
         <div className="p-3 flex items-center justify-start text-white bg-linear-to-t from-[#EB5528] to-[#FE9164] rounded-full">
           <AudioWaveform />
         </div>
@@ -78,7 +78,7 @@ const Sidebar = ({ className }: { className?: string }) => {
           );
         })}
       </div>
-      <div className="flex flex-col w-full gap-1">
+      <div className="flex flex-col w-full gap-3">
         <div 
           onClick={() => openModal("transactions")}
           className="h-12 w-full flex items-center justify-center px-2 rounded-full cursor-pointer hover:bg-background hover:text-white">
