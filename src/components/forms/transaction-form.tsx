@@ -6,8 +6,14 @@ import { addTransaction } from "@/lib/actions";
 
 const TransactionForm = () => {
     const closeModal = useModalManagement((state) => state.closeModal);
+    
+    const handleSubmit = async (formData: FormData) => {
+        await addTransaction(formData);
+        closeModal();
+    }
+
     return (
-      <Form action={addTransaction} className="flex flex-col gap-5">
+      <Form action={handleSubmit} className="flex flex-col gap-5">
         <Input
           id="txn-description"
           name="txn-description"

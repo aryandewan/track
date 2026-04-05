@@ -3,9 +3,18 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { addLimit } from "@/lib/actions"
 
+import { useModalManagement } from "@/store/modalManagement"
+
 const LimitForm = () => {
+    const closeModal = useModalManagement((state) => state.closeModal);
+    
+    const handleSubmit = async (formData: FormData) => {
+        await addLimit(formData);
+        closeModal();
+    }
+
     return (
-        <Form action={addLimit} className="flex flex-col gap-5">
+        <Form action={handleSubmit} className="flex flex-col gap-5">
             <Input
                 id="limit"
                 name="limit"

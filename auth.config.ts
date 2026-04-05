@@ -2,6 +2,8 @@ import GitHub from "next-auth/providers/github";
 import type { NextAuthConfig } from "next-auth";
 
 const authConfig: NextAuthConfig = {
+  basePath: "/api/auth",
+  trustHost: true,
   session: {
     strategy: "jwt",
   },

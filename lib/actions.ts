@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth"
 import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 export const addSalary = async (formData: FormData) => {
     const session = await auth()
@@ -19,6 +20,7 @@ export const addSalary = async (formData: FormData) => {
             salary: Number(salary)
         }
     })
+    revalidatePath("/dashboard")
 }
 
 export const addTransaction = async (formData: FormData) => {
@@ -43,6 +45,7 @@ export const addTransaction = async (formData: FormData) => {
                 user: true
             }
         })
+        revalidatePath("/dashboard")
     } catch(error) {
         console.log(error)
     }
@@ -64,4 +67,5 @@ export const addLimit = async (formData: FormData) => {
             limit: Number(limit)
         }
     })
+    revalidatePath("/dashboard")
 }

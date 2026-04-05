@@ -5,10 +5,19 @@ import { addSalary } from "@/lib/actions";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
+import { useModalManagement } from "@/store/modalManagement";
+
 const SalaryForm = () => {
+  const closeModal = useModalManagement((state) => state.closeModal);
+  
+  const handleSubmit = async (formData: FormData) => {
+    await addSalary(formData);
+    closeModal();
+  }
+
   return (
     <Form
-      action={addSalary}
+      action={handleSubmit}
       className="flex flex-col items-center justify-center gap-5"
     >
       <div className="w-full">

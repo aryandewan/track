@@ -27,7 +27,7 @@ const LimitCard = ({amount, className, amountClassName, title, titleClassName, p
             <div className="flex flex-col gap-2">
               <div className="h-3 rounded-full overflow-hidden bg-black/10">
                 <div 
-                  className={`bg-linear-to-r from-[#EB5528] to-[#FE9164] h-full rounded-full`}
+                  className={`bg-linear-to-r from-[#EB5528] to-[#FE9164] h-full rounded-full transition-all duration-[2000ms] ease-in-out`}
                   style={{ width: `${percentage}%` }}
                 ></div>
               </div>
