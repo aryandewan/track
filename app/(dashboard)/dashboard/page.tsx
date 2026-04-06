@@ -35,12 +35,26 @@ const Page = async () => {
       limit: true
     }
   })
+  
+  const montlyExpenses = await prisma.transactions.aggregate({
+    where: {
+      userId: session?.user?.id,
+      date: {
+        gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+      },
+    },
+    _sum: {
+      amount: true,
+    },
+  });
 
   const newSalary = salary?.salary || 0
   const totalExpenses = expenses._sum.amount || 0
   const balance = newSalary - totalExpenses
+  const totalMontlyExpenses = montlyExpenses._sum.amount || 0
   const monthlyLimit = limit?.limit || 0
-  const percentage = Math.round(((totalExpenses / monthlyLimit) * 100) || 0)
+  const percentage = Math.round(((totalMontlyExpenses / monthlyLimit) * 100) || 0)
 
   return (
     <DashboardShell>
@@ -62,7 +76,7 @@ const Page = async () => {
             className="bg-linear-to-t from-[#EB5528] to-[#FE9164]"
           />
           <SummaryCard
-            amount={totalExpenses}
+            amount={totalMontlyExpenses}
             title="Total Expenses"
             titleClassName="text-xl"
             amountClassName="text-4xl"
